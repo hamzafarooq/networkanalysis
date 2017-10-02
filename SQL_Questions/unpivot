@@ -1,0 +1,48 @@
+
+#This is a popular question for advanced SQL
+
+
+
+#Taken from SQLFIDDLE 
+
+
+CREATE TABLE Student
+	([Name] varchar(5), [Maths] int, [Science] int, [English] int)
+;
+	
+INSERT INTO Student
+	([Name], [Maths], [Science], [English])
+VALUES
+	('Tilak', 90, 40, 60),
+	('Raj', 30, 20, 10)
+;
+
+
+#Solution 1:
+
+select name, subject, marks
+from student
+unpivot
+(
+  marks
+  for subject in (Maths, Science, English)
+) u
+
+
+
+
+
+#Solution 2:
+
+select 
+
+select Name, case when Maths >0 then 'Math' end as subject, Maths as marks
+from Student where Maths >0
+union 
+select Name,case when Science >0 then 'Science' end as subject, Science as marks
+from Student where Science >0
+union 
+select Name,case when English >0 then 'English' end as subject, English as marks
+from Student where English >0
+
+
